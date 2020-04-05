@@ -1,6 +1,7 @@
 let countdown;
 const timerDisplay = document.querySelector(".display__time-left")
 const timerEndDisplay = document.querySelector(".display__end-time")
+const buttons = document.querySelectorAll(".timer__button")
 
 function getTimezone() {
     const timezone = parseInt(new Date().toTimeString().slice(12, 17))/100
@@ -51,5 +52,10 @@ function displayTimerEnd(now, seconds) {
     timerEndDisplay.textContent = "BE BACK AT " + timeString(timerEndSeconds)
 }
 
+function getSeconds() {
+    seconds = this.dataset.time
+    timer(seconds)
+} 
 
-timer(600)
+
+buttons.forEach(button => button.addEventListener("click", getSeconds))
