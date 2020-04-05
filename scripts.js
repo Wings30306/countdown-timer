@@ -1,7 +1,8 @@
 let countdown;
 const timerDisplay = document.querySelector(".display__time-left")
 const timerEndDisplay = document.querySelector(".display__end-time")
-const buttons = document.querySelectorAll(".timer__button")
+const buttons = document.querySelectorAll("[data-time")
+const custom = document.querySelector("#custom")
 
 function getTimezone() {
     const timezone = parseInt(new Date().toTimeString().slice(12, 17))/100
@@ -9,6 +10,9 @@ function getTimezone() {
 }
 
 function timer(seconds) {
+    // clear any existing timers
+    clearInterval(countdown)
+
     const now = Date.now();
     const then = now + seconds * 1000
     displayTimeLeft(seconds)
@@ -44,6 +48,7 @@ function twoDigits(x) {
 
 function displayTimeLeft(seconds) {
     timerDisplay.textContent = timeString(seconds)
+    document.title = timeString(seconds)
 }
 
 function displayTimerEnd(now, seconds) {
@@ -59,3 +64,10 @@ function getSeconds() {
 
 
 buttons.forEach(button => button.addEventListener("click", getSeconds))
+document.customForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const minutes = this.minutes.value
+    const seconds = minutes * 60
+    this.reset()
+    timer(seconds)
+})
